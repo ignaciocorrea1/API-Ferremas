@@ -1,0 +1,22 @@
+Apuntes del código.
+
+RUTAS
+1. Blueprint: se usa para organizar y agrupar rutas que se relacionan entre si.
+
+2. jsonify: convierte datos en JSON para que se puedan acceder desde otro sistema externo.
+
+SERVICIOS
+1. zip(x, y): empareja valores por su posición
+    
+- Ejemplo:
+columnas = ['id', 'nombre', 'precio']
+resultado = [(1, 'Taladro', 59990), (2, 'Sierra', 45990)]
+
+- Usando dict(zip()):
+dict(zip(columnas, resultado))
+
+- Se obtiene:
+{'id': 1, 'nombre': 'Taladro', 'precio': 59990}
+
+2. %s: en lugar de pasar el parámetro directamente en la consulta, se usa %s para indicar donde debe ir.
+El valor se envía por separado a la base de datos y lo trata como un dato no como código. 
