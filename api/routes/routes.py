@@ -1,35 +1,51 @@
 from flask import Blueprint, jsonify
-
-"""
-    Blueprint: se usa para organizar y agrupar rutas que se relacionan entre si.
-"""
+from api.services.producto_service import ProductoService
 
 def register_routes(app, mysql):
+    """Blueprints"""
     productos = Blueprint("productos", __name__)
     
-    @productos.route("/productos", methods=["GET"])
+    """Servicios"""
+    producto_service = ProductoService(mysql)
+    
+    """Rutas"""
+    # GET productos
+    @productos.route("/productos/", methods=["GET"])
     def get_productos():
         try:
-            cur = mysql.connection.cursor()
-            cur.execute("SELECT * FROM productos")  
-            productos = cur.fetchall()
-            cur.close()
-            return jsonify({"estado": "ok", "productos": productos})
+            productos = producto_service.get_productos()
+            
+            if not productos:
+                return jsonify({"estado": "Sin resultados", "Mensaje": "No se encontraron productos"}), 404
+            
+            return jsonify(productos), 200 
         except Exception as e:
-            return jsonify({"estado": "error", "mensaje": str(e)}), 500
+            return jsonify({"Estado": "Error al obtener los productos", "Mensaje": str(e)}), 500
     
+    # GET producto por id
+    @productos.route("/productos/<int:id>", methods=["GET"])
+    def get_producto_by_id(id):
+        try:
+            producto = producto_service.get_producto_by_id(id)
+
+            if not producto:
+                return jsonify({"Estado": "Sin resultados", "Mensaje": "No se encontro producto"}), 404
+            return jsonify(producto), 200
+        except Exception as e:
+            return jsonify({"Estado": "Error al obtener el producto", "Mensaje": str(e)}), 500
     
-    """ Validar la conexion con la BD """
+    # Validar conexion con BD
     @app.route("/validar", methods=["GET"])
     def validacion():
         try:
             # Se establece una conexión con la BD
             cur = mysql.connection.cursor()
             cur.execute("SELECT 1")
-            resultado = cur.fetchone() # Obtención de la primera fila solo
+            resultado = cur.fetchone() 
             cur.close()
-            return jsonify({"estado": "conectado", "mensaje": resultado})
+            return {"Estado": "Conectado correctamente con la BD", "Mensaje": resultado}
         except Exception as e:
-            return jsonify({"estado": "error", "mensaje": str(e)}), 500
-        
+            return {"Estado": "Error al conectar con la BD", "Mensaje": str(e)}, 500
+    
+    """ Registro de Blueprints """    
     app.register_blueprint(productos)
