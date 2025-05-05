@@ -37,6 +37,7 @@ CREATE TABLE Producto (
     precio DECIMAL(10, 2) NOT NULL,
     imagen VARCHAR(200) NOT NULL, -- URL
     stock INT NOT NULL,
+    garantia INT NOT NULL,
     marca_producto INT NOT NULL,
     tipo_producto_id INT NOT NULL,
     FOREIGN KEY (marca_producto) REFERENCES Marca(id),
@@ -88,18 +89,18 @@ CREATE TABLE Pago (
 
 -- Inserción datos prueba
 INSERT INTO Marca (nombre) VALUES
-('Bosch'),
-('Makita'),
-('Stanley');
+("Bosch"),
+("Makita"),
+("Stanley");
 
 INSERT INTO Tipo_Producto (nombre) VALUES
-('Taladro'),
-('Sierra'),
-('Lijadora');
+("Taladro"),
+("Sierra"),
+("Lijadora");
 
-INSERT INTO Producto (nombre, descripcion, precio, imagen, stock, marca_producto, tipo_producto_id) VALUES
-('Taladro Inalámbrico Bosch', 'Taladro inalámbrico 18V con batería de litio.', 89990.00, 'https://inalambricoschile.vtexassets.com/arquivos/ids/163840-800-auto?v=638087858680030000&width=800&height=auto&aspect=true', 15, 1, 1),
-('Sierra Circular Makita', 'Sierra circular 1200W con disco de 7 pulgadas.', 129990.00, 'https://www.dimarsa.cl/media/catalog/product/1/_/1_13.jpg', 10, 2, 2),
-('Lijadora Orbital Stanley', 'Lijadora orbital para acabados finos y madera.', 54990.00, 'https://easycl.vteximg.com.br/arquivos/ids/4973288/1279178-0000-001.jpg?v=638742015718900000', 20, 3, 3),
-('Sierra Caladora Bosch', 'Sierra caladora de precisión para cortes curvos.', 74990.00, 'https://rimage.ripley.cl/home.ripley/Attachment/MKP/7947/MPM10002083191/full_image-1.jpeg', 12, 1, 2),
-('Taladro Percutor Makita', 'Taladro percutor de alto rendimiento para hormigón.', 99990.00, 'https://makitaonline.vtexassets.com/arquivos/ids/157169-800-800?v=638254837474870000&width=800&height=800&aspect=true', 8, 2, 1);
+INSERT INTO Producto (nombre, descripcion, precio, imagen, stock, garantia, marca_producto, tipo_producto_id) VALUES
+("Taladro Inalámbrico Bosch", "Taladro inalámbrico 18V con batería de litio.", 89990.00, "https://inalambricoschile.vtexassets.com/arquivos/ids/163840-800-auto?v=638087858680030000&width=800&height=auto&aspect=true", 15, 6, 1, 1),
+("Sierra Circular Makita", "Sierra circular 1200W con disco de 7 pulgadas.", 129990.00, "https://www.dimarsa.cl/media/catalog/product/1/_/1_13.jpg", 10, 6, 2, 2),
+("Lijadora Orbital Stanley", "Lijadora orbital para acabados finos y madera.", 54990.00, "https://easycl.vteximg.com.br/arquivos/ids/4973288/1279178-0000-001.jpg?v=638742015718900000", 20, 6, 3, 3),
+("Sierra Caladora Bosch", "Sierra caladora de precisión para cortes curvos.", 74990.00, "https://rimage.ripley.cl/home.ripley/Attachment/MKP/7947/MPM10002083191/full_image-1.jpeg", 12, 6, 1, 2),
+("Taladro Percutor Makita", "Taladro percutor de alto rendimiento para hormigón.", 99990.00, "https://makitaonline.vtexassets.com/arquivos/ids/157169-800-800?v=638254837474870000&width=800&height=800&aspect=true", 8, 6, 2, 1);

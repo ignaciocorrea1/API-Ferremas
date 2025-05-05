@@ -20,8 +20,9 @@ class ProductoService:
                 precio=fila[3],
                 imagen=fila[4],
                 stock=fila[5],
-                marca_producto=fila[6],
-                tipo_producto_id=fila[7]
+                garantia=fila[6],
+                marca_producto=fila[7],
+                tipo_producto_id=fila[8]
                 ).to_dict() for fila in resultado
         ]
         
@@ -43,8 +44,9 @@ class ProductoService:
                 precio=resultado[3],
                 imagen=resultado[4],
                 stock=resultado[5],
-                marca_producto=resultado[6],
-                tipo_producto_id=resultado[7]
+                garantia=resultado[6],
+                marca_producto=resultado[7],
+                tipo_producto_id=resultado[8]
             )
             return producto.to_dict()
         return None
