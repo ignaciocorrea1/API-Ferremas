@@ -1,9 +1,13 @@
 from flask import Flask
 from api.routes.routes import register_routes
 from api.database.database import init_db
+from flask_cors import CORS
 
 # Instancia de Flask
 app = Flask(__name__)
+
+# Cross-Origin Request
+CORS(app)
 
 # Configuración MySQL
 app.config["MYSQL_HOST"] = "localhost"
