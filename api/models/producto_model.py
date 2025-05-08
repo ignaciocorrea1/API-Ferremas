@@ -12,12 +12,13 @@ class Producto:
 
     def to_dict(self):
         return {
-            'id': self.id,
-            'nombre': self.nombre,
-            'descripcion': self.descripcion,
-            'precio': float(self.precio),
-            'imagen': self.imagen,
-            'garantia': self.garantia,
-            'marca_producto': self.marca_producto,
-            'tipo_producto_id': self.tipo_producto_id,
+            "id": self.id,
+            "nombre": self.nombre,
+            "descripcion": self.descripcion,
+            "precio": float(self.precio),
+            "imagen": self.imagen,
+            "stock": self.stock,
+            "garantia": self.garantia,
+            "marca_producto": self.marca_producto,
+            "tipo_producto_id": self.tipo_producto_id,
         }
