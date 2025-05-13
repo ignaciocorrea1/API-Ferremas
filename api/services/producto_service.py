@@ -50,3 +50,29 @@ class ProductoService:
             )
             return producto.to_dict()
         return None
+    
+    # PUT precios a usd
+    def put_precio_usd(self, valor):
+        cursor = self.mysql.connection.cursor()
+        try:
+            cursor.execute("UPDATE producto SET precio = precio / %s", (valor,))
+            self.mysql.connection.commit()  
+            return True
+        except Exception as e:
+            self.mysql.connection.rollback() 
+            raise e 
+        finally:
+            cursor.close() 
+            
+    # PUT precios a clp
+    def put_precio_clp(self, valor):
+        cursor = self.mysql.connection.cursor()
+        try:
+            cursor.execute("UPDATE producto SET precio = precio * %s", (valor,))
+            self.mysql.connection.commit()  
+            return True
+        except Exception as e:
+            self.mysql.connection.rollback() 
+            raise e 
+        finally:
+            cursor.close() 
