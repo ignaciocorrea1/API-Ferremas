@@ -6,7 +6,7 @@ class DolarService:
     def get_dolar_today(self):
         try:
             data = DivisasAPI.get_dolar_data()
-            # Obtencion de la seria mas reciente con el valor del dolar
+            # Obtencion de la serie más reciente con el valor del dolar
             serie = data["serie"][0]
             
             return Dolar(

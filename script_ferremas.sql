@@ -104,3 +104,11 @@ INSERT INTO Producto (nombre, descripcion, precio, imagen, stock, garantia, marc
 ("Lijadora Orbital Stanley", "Lijadora orbital para acabados finos y madera.", 54990.00, "https://easycl.vteximg.com.br/arquivos/ids/4973288/1279178-0000-001.jpg?v=638742015718900000", 20, 6, 3, 3),
 ("Sierra Caladora Bosch", "Sierra caladora de precisión para cortes curvos.", 74990.00, "https://rimage.ripley.cl/home.ripley/Attachment/MKP/7947/MPM10002083191/full_image-1.jpeg", 12, 6, 1, 2),
 ("Taladro Percutor Makita", "Taladro percutor de alto rendimiento para hormigón.", 99990.00, "https://makitaonline.vtexassets.com/arquivos/ids/157169-800-800?v=638254837474870000&width=800&height=800&aspect=true", 8, 6, 2, 1);
+
+INSERT INTO Tipo_Usuario (nombre) VALUES
+("Cliente"),
+("Prueba"),
+("Admin");
+
+INSERT INTO Usuario (rut,dv,nombre,correo,contrasenia,direccion,telefono,tipo_usuario_id) VALUES
+("11.111.111","1","Prueba","prueba@gmail.com","password","Av. Siempreviva","99999999",2)
