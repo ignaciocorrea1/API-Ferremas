@@ -141,7 +141,7 @@ def register_routes(app, mysql):
             response = webpay_service.confirmar_pago(token)
             status = response.get("status")
 
-            # Redirige solo con el estado del pago
+            # Redirige con la información
             return redirect(f"http://localhost:8000/pago_exitoso?estado={status}&token={token}")
 
 
@@ -183,7 +183,8 @@ def register_routes(app, mysql):
             fecha_actual = datetime.now()
             pago_service.crear_pago(pedido_id, total, fecha_actual, estado, token, tipo, usuario)
 
-            return jsonify({"estado": "ok", "mensaje": "Pago registrado correctamente"})
+            # Redirige con la información
+            return redirect(f"http://localhost:8000/resultado_pago?resultado={"exitoso"}")
 
         except Exception as e:
             return jsonify({"estado": "error", "detalle": str(e)}), 500
