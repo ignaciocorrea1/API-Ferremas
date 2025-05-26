@@ -1,51 +1,60 @@
-# API Ferremas
+# **API Ferremas**
 
-# 📄 Estructura de Archivos y Funciones
+El desarrollo de una APIRestful permitirá a Ferremas la comunicación con su base de datos interna como también la integración con sistemas externos, tales como Transbank para el proceso de pago y Mindicador para la conversión de divisas. 
 
-| Archivo | Función Principal |
-|:---|:---|
-| app.py | Crea app Flask, configura MySQL, registra rutas |
-| routes/routes.py | Define rutas HTTP (endpoints) |
-| services/user_service.py | Lógica de negocio de usuarios |
-| services/product_service.py | Lógica de negocio de productos |
-| models/user.py | Define la entidad User |
-| models/product.py | Define la entidad Product |
-| db/database.py | Conecta a MySQL |
-| utils/helpers.py | Helpers (vacío, para usar después) |
+## Tecnologías utilizadas 📖
 
----
+La API fue desarrollada con las siguientes tecnologías:
 
-# 📄 Detalle de Cada Archivo
+1. **Flask:** Framework de Python que permite crear aplicaciones web y APIS Restful de forma rápida, sencilla y modular.
 
-## 1. 📄 app.py
-- Es el archivo principal que inicia toda la aplicación.
-- Configura el servidor Flask.
-- Configura la conexión a MySQL.
-- Llama a `register_routes` para registrar las rutas.
+## Arquitectura utilizada 🏛️
 
-## 2. 📂 api/routes/routes.py
-- Define los **endpoints HTTP**.
-- Cada ruta llama al **servicio correspondiente** para obtener o procesar datos.
-- No hace lógica pesada aquí, solo recibe y responde.
+La API de ferremas se basa en una arquitectura limpia, la idea principal detrás de esta arquitectura es separar las preocupaciones en diferentes capas bien definidas, con reflas estrictas sobre cómo deben interactuar entre sí.
 
-## 3. 📂 api/services/user_service.py y api/services/product_service.py
-- Contienen la **lógica de negocio**:
-  - Consultar todos los usuarios.
-  - Consultar todos los productos.
-- Se conectan a **MySQL** usando el `cursor`.
-- Devuelven los resultados en forma de **objetos (modelos)**.
+La arquitectura limpia se separa de la siguiente forma:
 
-## 4. 📂 api/models/user.py y api/models/product.py
-- Modelan los datos:
-  - Definen qué campos tiene un `User` (id, name, email).
-  - Definen qué campos tiene un `Product` (id, name, price).
-- Tienen un método `to_dict()` para convertir los objetos a JSON (util para respuestas de API).
+- **Capa de Entidades (Entities):** Contiene las entidades centrales y los objetos del negocio. Son clases o estructuras que encapsulan los datos principales del negocio.
+  
+- **Capa de Casos de Uso (Use Cases):** Contiene la lógica de la aplicación y coordina la interacción entre las entidades. Encapsulan la lógica de negocio específica para cada función o acción que debe realizar la aplicación.
+  
+- **Capa de Interfaces:** Esta capa conecta la lógica interna del sistema con lo exterior. Además, convierten los datos entre el formato que utiliza el exterior y el de las capas internas. 
 
-## 5. 📂 api/db/database.py
-- Se encarga de **crear la conexión a MySQL** usando `Flask-MySQLdb`.
-- Define `init_db(app)` para inicializar el cliente de MySQL.
+- **Capa de Infraestructura:** Es la capa más externa y se encuentran los accesos a base de datos, servicios externos, frameworks, bibliotecas, etc.
 
-## 6. 📂 api/utils/helpers.py
-- Actualmente **está vacío**, pero reservado para:
-  - Funciones auxiliares futuras.
-  - Validaciones, formateos de datos, helpers de errores, etc.
+![Imagen de como es la Arquitectura limpia](https://i.blogs.es/28531a/clean/450_1000.webp)
+
+## Requisitos previos 🔧
+
+Es necesario que tengas los siguientes programas instalados para que el proyecto se ejecute correctamente:
+
+- ``` Python 3.13.1+ ```
+
+- ``` Pip 25.1.1+ ```
+  
+- ``` Flask 3.1.0+ ```
+
+Para verificar que los tengas:
+
+1. Abre la terminal y verifica la instalación de **Python** con **"python --version"**
+2. En la terminal, verifica la instalación de **Pip** con **"pip --version"**
+3. En la terminal, verifica la instalación de **Flask** con **"Flask --version"**
+
+## Ejecución 🚀
+
+Sigue los siguientes pasos para instalar las dependencias del proyecto:
+
+1. Abre la terminal y verifica que en la carpeta en que te encuentras se encuentran los files requirements.txt y app.y con: "ls" o "dir".
+2. Ejecuta el comando **"pip install -r requirements.txt"**.
+2. Ejecuta el comando **"python app.py"** para iniciar la aplicación
+
+> [!WARNING]
+> Para que puedas ver los productos es necesario crear la base de datos en MySQL, el script para su creación se encuentra en el mismo directorio, "script_ferremas.sql".
+
+
+## Integrantes 🤝
+
+- Joaquín Armijo
+- Ignacio Correa
+- Fernando Flores
+- Jaime Vergara
