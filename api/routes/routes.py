@@ -184,7 +184,9 @@ def register_routes(app, mysql):
             pago_service.crear_pago(pedido_id, total, fecha_actual, estado, token, tipo, usuario)
 
             # Redirige con la información
-            return redirect(f"http://localhost:8000/resultado_pago?resultado={"exitoso"}")
+            if estado == "AUTHORIZED":
+                return redirect(f"http://localhost:8000/resultado_pago?resultado={"exitoso"}")
+            return redirect(f"http://localhost:8000/resultado_pago?resultado={"denegado"}")
 
         except Exception as e:
             return jsonify({"estado": "error", "detalle": str(e)}), 500
