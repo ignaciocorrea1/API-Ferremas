@@ -151,13 +151,20 @@ def register_routes(app, mysql):
     @app.route('/guardar_pago', methods=["POST"])
     def guardar_pago():
         try:
-            carrito_raw = request.form.get("carrito")
-            carrito = json.loads(carrito_raw) if carrito_raw else []
             usuario = request.form.get("usuario")
-            total = request.form.get("total")
             estado = request.form.get("estado")
             token = request.form.get("token")
             tipo = request.form.get("tipo")
+
+            carrito = webpay_service.obtener_carrito_por_token(token)
+
+            webpay_service.eliminar_carrito_por_token(token)
+
+            total = 0
+            for producto in carrito:
+                cantidad = producto.get("cantidad", 1)
+                precio = producto.get("precio", 0)
+                total += cantidad * precio
 
             print(f"Datos recibidos:")
             print(f"Carrito: {carrito}")
