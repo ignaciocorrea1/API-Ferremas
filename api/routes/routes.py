@@ -159,25 +159,32 @@ def register_routes(app, mysql):
             token = request.form.get("token")
             tipo = request.form.get("tipo")
 
-            print(carrito)
-            print(usuario)
-            print(total)
-            print(estado)
-            print(token)
-            print(tipo)
+            print(f"Datos recibidos:")
+            print(f"Carrito: {carrito}")
+            print(f"Usuario: {usuario}")
+            print(f"Total: {total}")
+            print(f"Estado: {estado}")
+            print(f"Token: {token}")
+            print(f"Tipo: {tipo}")
 
             # Crear el pedido y obtener su ID
             pedido_id = pago_service.crear_pedido(total, usuario)
 
-            # Crear detalles por cada producto en el carrito
-            for producto in carrito:
-                # Suponiendo que el producto tiene id, cantidad y precio (ajusta según tu estructura)
-                producto_id = producto.get("id")
-                cantidad = producto.get("cantidad", 1)
-                precio_unitario = float(producto.get("precio", 0))
-                total_producto = cantidad * precio_unitario
+            # Verificar si el carrito está vacío (problema con localStorage/WebPay)
+            if not carrito or len(carrito) == 0:
+                print("⚠️  CARRITO VACÍO - Creando pedido de respaldo por problema con WebPay")
+                # Crear un detalle de pedido de respaldo para evitar errores de integridad
+                pago_service.crear_detalle_pedido_respaldo(pedido_id, float(total))
+            else:
+                # Procesar carrito normal
+                print(f"✅ Procesando carrito con {len(carrito)} productos")
+                for producto in carrito:
+                    producto_id = producto.get("id")
+                    cantidad = producto.get("cantidad", 1)
+                    precio_unitario = float(producto.get("precio", 0))
+                    total_producto = cantidad * precio_unitario
 
-                pago_service.crear_detalle_pedido(pedido_id, producto_id, cantidad, total_producto)
+                    pago_service.crear_detalle_pedido(pedido_id, producto_id, cantidad, total_producto)
 
             # Crear el registro de pago con la fecha actual
             fecha_actual = datetime.now()
@@ -185,12 +192,12 @@ def register_routes(app, mysql):
 
             # Redirige con la información
             if estado == "AUTHORIZED":
-                return redirect(f"http://localhost:8000/resultado_pago?resultado={"exitoso"}")
-            return redirect(f"http://localhost:8000/resultado_pago?resultado={"denegado"}")
+                return redirect(f"http://localhost:8000/resultado_pago?resultado=exitoso")
+            return redirect(f"http://localhost:8000/resultado_pago?resultado=denegado")
 
         except Exception as e:
+            print(f"❌ Error en guardar_pago: {str(e)}")
             return jsonify({"estado": "error", "detalle": str(e)}), 500
-    
     
     """ Registro de Blueprints """    
     app.register_blueprint(productos)
